@@ -36,6 +36,16 @@ def loginpage():
 def newblog():
     return render_template('newpost.html')
 
+@app.route("/viewblog")
+def viewblog():
+    if not session.get('logged'):
+        return redirect(url_for('loginpage'))
+    else:
+        myvar = request.args.get('myvar', '')
+        blog = db.blogs.find({'_id' : ObjectId(myvar)})
+        return render_template('viewblog.html', blog=blog)
+        
+
 @app.route("/search", methods=['GET', 'POST'])
 def search():
     search = db.blogs.find({"$or":[ {"author": {"$regex": request.form['search']}}, {"title": {"$regex": request.form['search']}}, {"category":request.form['search']}]})
@@ -47,6 +57,7 @@ def logout():
     session.pop('username',None)
     session.pop('email',None)
     session.pop('id',None)
+    session.pop('logged',None)
     blog = db.blogs.find({})
     return render_template('index.html', blog=blog)
 
@@ -65,11 +76,11 @@ def register():
             session['id'] = user["_id"]    
             session['email'] = request.form['email']
             session['username'] = request.form['username']
+            session['logged'] = 'TRUE'
             return redirect(url_for("homepage"))
         else:
             flash('Email Already Exists')
             return render_template('register.html')
-
     return redirect(url_for("registerpage"))
 ########Registration#########
 
@@ -85,6 +96,7 @@ def login():
                 session['username'] = user["username"]
             session['id'] = user["_id"]
             session['email'] = request.form['email']
+            session['logged'] = 'TRUE'
             return redirect(url_for("homepage"))
         else:
             flash('Invalid Email/Password')

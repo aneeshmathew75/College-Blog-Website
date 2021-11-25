@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>post</title>
+    <title>Post Blog | College Blog</title>
     <link rel="stylesheet" href="static/newpostassets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=ABeeZee">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abhaya+Libre&amp;display=swap">
@@ -30,9 +30,11 @@
             <div class="container"><a class="navbar-brand text-monospace d-inline-flex d-xl-flex flex-row flex-grow-1 flex-shrink-1 align-items-start align-content-start align-self-start my-auto justify-content-xl-start flash animated" href="#" style="font-family: 'Abhaya Libre', serif;">College Blog&nbsp;</a><button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navcol-1">
                     <ul class="navbar-nav mr-auto">
-                        <li class="nav-item"><a class="nav-link active" href="#">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/homepage">Home</a></li>
                         <li class="nav-item"><a class="nav-link" href="#">Trending</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#">Top</a></li>
+                        {% if session['email'] %}
+                        <li class="nav-item"><a class="nav-link active" href="/newblog">Add Blog</a></li>
+                        {% endif %}
                         <li class="nav-item dropdown"><a class="dropdown-toggle nav-link" aria-expanded="false" data-toggle="dropdown" href="#">Categories&nbsp;</a>
                             <div class="dropdown-menu"><a class="dropdown-item" href="#">Tech</a><a class="dropdown-item" href="#">Economy</a><a class="dropdown-item" href="#">Lifestyle</a></div>
                         </li>
