@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Edit Blog | College Blog</title>
+    <link rel="stylesheet" href="static/newpostassets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=ABeeZee">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abhaya+Libre&amp;display=swap">
+    <link rel="stylesheet" href="static/newpostassets/fonts/ionicons.min.css">
+    <link rel="stylesheet" href="static/newpostassets/css/card-3-column-animation-shadows-images.css">
+    <link rel="stylesheet" href="static/newpostassets/css/dh-card-image-left-dark.css">
+    <link rel="stylesheet" href="static/newpostassets/css/dh-row-titile-text-image-right-1.css">
+    <link rel="stylesheet" href="static/newpostassets/css/Footer-Dark.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+    <link rel="stylesheet" href="static/newpostassets/css/Multi-step-form.css">
+    <link rel="stylesheet" href="static/newpostassets/css/Navigation-with-Button.css">
+    <link rel="stylesheet" href="static/newpostassets/css/Responsive-footer-1.css">
+    <link rel="stylesheet" href="static/newpostassets/css/Responsive-footer.css">
+    <link rel="stylesheet" href="static/newpostassets/css/Simple-Form-1.css">
+    <link rel="stylesheet" href="static/newpostassets/css/Simple-Form.css">
+    <link rel="stylesheet" href="static/newpostassets/css/styles.css">
+</head>
+
+<body class="justify-content-around align-items-center align-content-center" style="background: rgb(204,201,201);filter: brightness(92%);border-color: rgb(195,210,225);">
+    <section>
+        <nav class="navbar navbar-light navbar-expand-md navigation-clean-button" data-aos="flip-up">
+            <div class="container"><a class="navbar-brand text-monospace d-inline-flex d-xl-flex flex-row flex-grow-1 flex-shrink-1 align-items-start align-content-start align-self-start my-auto justify-content-xl-start flash animated" href="#" style="font-family: 'Abhaya Libre', serif;">College Blog&nbsp;</a><button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navcol-1">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item"><a class="nav-link" href="/homepage">Home</a></li>
+                        <!--<li class="nav-item"><a class="nav-link" href="#">Trending</a></li>
+                        <li class="nav-item dropdown"><a class="dropdown-toggle nav-link" aria-expanded="false" data-toggle="dropdown" href="#">Categories&nbsp;</a>
+                            <div class="dropdown-menu"><a class="dropdown-item" href="#">Tech</a><a class="dropdown-item" href="#">Economy</a><a class="dropdown-item" href="#">Lifestyle</a></div>
+                        </li>-->
+                    </ul>
+                    {% if session['email'] %}
+                    <span class="navbar-text actions"> <a class="login" href="#">{{session['username']}}</a><a class="btn btn-light action-button" role="button" href="/logout" style="background: rgb(68,79,79);">Log Out</a></span>
+                    {% else %}
+                    <span class="navbar-text actions"> <a class="login" href="/loginpage">Log In</a><a class="btn btn-light action-button" role="button" href="/registerpage" style="background: rgb(68,79,79);">Sign Up</a></span>
+                    {% endif %}
+                </div>
+            </div>
+        </nav>
+    </section>
+    {% for data in blog%}
+    <div id="empresa" style="padding:20px;margin:1px;">
+        <Center><h1 style="margin-bottom: 1.5em;">Edit Blog</h1></Center>
+        <div class="container">
+            <form action="{{url_for('newpost')}}" method="post">
+                <div class="form-group"><input class="form-control" type="text" value="{{data.title}}" style="background-color:#E8F5FB;" name="title" placeholder="Tittle of the Article"></div>
+                <div class="form-group"><input class="form-control" type="text" value="{{data.category}}" style="background-color:#E8F5FB;" name="category" placeholder="Tags / Category"></div>
+                <div class="form-group"><input class="form-control" type="text" value="{{data.smalldesc}}" style="background-color:#E8F5FB;" name="smalldesc" placeholder="Small Description"></div>
+                <div class="form-group"><input class="form-control" type="text" value="{{data.reflink}}" style="background-color:#E8F5FB;" name="reflink" placeholder="References"></div>
+                <div class="form-group"><textarea class="form-control" style="background-color:#E8F5FB;" name="content" placeholder="Content" rows="14">{{data.content}}"</textarea></div>
+               <div class="form-group"><button class="btn btn-primary btn-sm d-inline float-right" style="margin-top: 0px;width: 119px;padding-top: 10px;padding-right: 16px;padding-bottom: 10px;padding-left: 16px;color: rgb(254,250,250);background: var(--secondary);text-align: center;transform: translate(-551px);" type="submit">Submit</button></div></center>
+            </form>
+            <br>
+            <br>
+        </div>
+    </div>
+    {% endfor %}
+    <section></section>
+    <section>
+        <footer class="footer-dark">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6 col-md-3 item">
+                        <h3>Services</h3>
+                        <ul>
+                            <li><a href="#">_______</a></li>
+                            <li><a href="#">--------</a></li>
+                            <li><a href="#">######</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-6 col-md-3 item">
+                        <h3>About</h3>
+                        <ul>
+                            <li><a href="#">(()()()()</a></li>
+                            <li><a href="#">21651651</a></li>
+                            <li><a href="#">-5159811</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6 item text">
+                        <h3>Company Name</h3>
+                        <p>Add a class of&nbsp;fa-fw&nbsp;on the HTML element referencing your icon to set one or more icons to the same fixed width. This is great to use when varying icon widths&nbsp;<br></p>
+                    </div>
+                    <div class="col item social"><a href="#"><i class="icon ion-social-facebook"></i></a><a href="#"><i class="icon ion-social-twitter"></i></a><a href="#"><i class="icon ion-social-wordpress-outline"></i></a><a href="#"><i class="icon ion-social-instagram"></i></a></div>
+                </div>
+                <p class="copyright">KJC_College Blog © 2021</p>
+            </div>
+        </footer>
+    </section>
+    <script src="static/newpostassets/js/jquery.min.js"></script>
+    <script src="static/newpostassets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="static/newpostassets/js/bs-init.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script src="static/newpostassets/js/Multi-step-form.js"></script>
+</body>
+
+</html>

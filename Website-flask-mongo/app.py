@@ -19,10 +19,20 @@ except:
     print ("Error - Couldn't connect to Mongo'")
 ########Connection##########
 
+@app.route("/")
+def indexpage():
+    blog = db.blogs.find({})
+    return render_template('index.html', blog=blog)
+
 @app.route("/homepage")
 def homepage():
     blog = db.blogs.find({})
     return render_template('index.html', blog=blog)
+
+@app.route("/userblog")
+def userblog():
+    blog = db.blogs.find({'student_id': session['id']})
+    return render_template('userblogs.html', blog=blog)
 
 @app.route("/registerpage")
 def registerpage():
@@ -36,9 +46,19 @@ def loginpage():
 def newblog():
     return render_template('newpost.html')
 
+@app.route("/editblog")
+def editblog():
+    if not session.get('email'):
+        return redirect(url_for('loginpage'))
+    else:
+        myvar = request.args.get('myvar', '')
+        blog = db.blogs.find({'_id' : ObjectId(myvar)})
+        return render_template('editblogs.html', blog=blog)
+
+
 @app.route("/viewblog")
 def viewblog():
-    if not session.get('logged'):
+    if not session.get('email'):
         return redirect(url_for('loginpage'))
     else:
         myvar = request.args.get('myvar', '')
@@ -69,14 +89,13 @@ def register():
         existing_user = users.find_one({'email' : request.form['email']})
 
         if existing_user is None:
-            users.insert_one({'username': request.form['username'], 'email' : request.form['email'], 'password' : request.form['password']})
+            users.insert_one({'username': request.form['username'], 'email' : request.form['email'], 'password' : request.form['password'], 'college' : request.form['collegename'], 'city' : request.form['city'], 'state' : request.form['state'], 'pincode' : request.form['pincode']})
             data = list(users.find({'email' : request.form['email']}))
             for user in data:
                 user["_id"] = str(user["_id"])
             session['id'] = user["_id"]    
             session['email'] = request.form['email']
             session['username'] = request.form['username']
-            session['logged'] = 'TRUE'
             return redirect(url_for("homepage"))
         else:
             flash('Email Already Exists')
@@ -96,7 +115,6 @@ def login():
                 session['username'] = user["username"]
             session['id'] = user["_id"]
             session['email'] = request.form['email']
-            session['logged'] = 'TRUE'
             return redirect(url_for("homepage"))
         else:
             flash('Invalid Email/Password')
@@ -113,6 +131,17 @@ def newpost():
             
     return redirect(url_for("newblog"))
 ########New Blog Post#########
+
+########Update Blog Post#########
+@app.route('/updateblog', methods=['GET', 'POST'])
+def updateblog():
+    if request.method == 'POST':
+        blog = db.blogs
+        blog.insert_one({'student_id': session['id'], 'author': session['username'], 'title' : request.form['title'], 'category' : request.form['category'], 'smalldesc' : request.form['smalldesc'], 'reflink' : request.form['reflink'],'content' : request.form['content'], 'likes': 0})
+        return redirect(url_for("homepage"))
+            
+    return redirect(url_for("newblog"))
+########Update Blog Post#########
 
 if __name__ == '__main__':
     app.run(debug=True)
