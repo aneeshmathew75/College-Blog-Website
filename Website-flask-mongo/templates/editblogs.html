@@ -31,6 +31,7 @@
                 <div class="collapse navbar-collapse" id="navcol-1">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item"><a class="nav-link" href="/homepage">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{url_for('userblog')}}">My Blogs</a></li>
                         <!--<li class="nav-item"><a class="nav-link" href="#">Trending</a></li>
                         <li class="nav-item dropdown"><a class="dropdown-toggle nav-link" aria-expanded="false" data-toggle="dropdown" href="#">Categories&nbsp;</a>
                             <div class="dropdown-menu"><a class="dropdown-item" href="#">Tech</a><a class="dropdown-item" href="#">Economy</a><a class="dropdown-item" href="#">Lifestyle</a></div>
@@ -49,13 +50,14 @@
     <div id="empresa" style="padding:20px;margin:1px;">
         <Center><h1 style="margin-bottom: 1.5em;">Edit Blog</h1></Center>
         <div class="container">
-            <form action="{{url_for('newpost')}}" method="post">
+            <form action="{{url_for('updateblog')}}" method="post">
+                <input type="hidden" name="id" value="{{data._id}}">
                 <div class="form-group"><input class="form-control" type="text" value="{{data.title}}" style="background-color:#E8F5FB;" name="title" placeholder="Tittle of the Article"></div>
                 <div class="form-group"><input class="form-control" type="text" value="{{data.category}}" style="background-color:#E8F5FB;" name="category" placeholder="Tags / Category"></div>
                 <div class="form-group"><input class="form-control" type="text" value="{{data.smalldesc}}" style="background-color:#E8F5FB;" name="smalldesc" placeholder="Small Description"></div>
                 <div class="form-group"><input class="form-control" type="text" value="{{data.reflink}}" style="background-color:#E8F5FB;" name="reflink" placeholder="References"></div>
                 <div class="form-group"><textarea class="form-control" style="background-color:#E8F5FB;" name="content" placeholder="Content" rows="14">{{data.content}}"</textarea></div>
-               <div class="form-group"><button class="btn btn-primary btn-sm d-inline float-right" style="margin-top: 0px;width: 119px;padding-top: 10px;padding-right: 16px;padding-bottom: 10px;padding-left: 16px;color: rgb(254,250,250);background: var(--secondary);text-align: center;transform: translate(-551px);" type="submit">Submit</button></div></center>
+                <div class="form-group"><button class="btn btn-primary btn-sm d-inline float-right" style="margin-top: 0px;width: 119px;padding-top: 10px;padding-right: 16px;padding-bottom: 10px;padding-left: 16px;color: rgb(254,250,250);background: var(--secondary);text-align: center;transform: translate(-551px);" type="submit">Submit</button></div></center>
             </form>
             <br>
             <br>

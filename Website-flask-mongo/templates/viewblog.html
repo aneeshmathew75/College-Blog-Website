@@ -32,31 +32,38 @@
     <link rel="stylesheet" href="static/viewblogassets/css/styles.css">
 </head>
 
-<body class="justify-content-around align-items-center align-content-center" style="background: rgb(204,201,201);filter: brightness(92%);border-color: rgb(195,210,225);">
+<body class="justify-content-around align-items-center align-content-center"
+    style="background: rgb(204,201,201);filter: brightness(92%);border-color: rgb(195,210,225);">
     <section>
         <nav class="navbar navbar-light navbar-expand-md navigation-clean-button" data-aos="flip-up">
-            <div class="container"><a class="navbar-brand text-monospace d-inline-flex d-xl-flex flex-row flex-grow-1 flex-shrink-1 align-items-start align-content-start align-self-start my-auto justify-content-xl-start flash animated" href="#" style="font-family: 'Abhaya Libre', serif;">College Blog&nbsp;</a><button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+            <div class="container"><a
+                    class="navbar-brand text-monospace d-inline-flex d-xl-flex flex-row flex-grow-1 flex-shrink-1 align-items-start align-content-start align-self-start my-auto justify-content-xl-start flash animated"
+                    href="#" style="font-family: 'Abhaya Libre', serif;">College Blog&nbsp;</a><button
+                    data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle
+                        navigation</span><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navcol-1">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item"><a class="nav-link" href="/homepage">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#">Trending</a></li>
                         {% if session['email'] %}
                         <li class="nav-item"><a class="nav-link" href="/newblog">Add Blog</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{url_for('userblog')}}">My Blogs</a></li>
                         {% endif %}
-                        <li class="nav-item dropdown"><a class="dropdown-toggle nav-link" aria-expanded="false" data-toggle="dropdown" href="#">Categories&nbsp;</a>
-                            <div class="dropdown-menu"><a class="dropdown-item" href="#">Tech</a><a class="dropdown-item" href="#">Economy</a><a class="dropdown-item" href="#">Lifestyle</a></div>
-                        </li>
+
                     </ul>
                     {% if session['email'] %}
-                    <span class="navbar-text actions"> <a class="login" href="">{{session['username']}}</a><a class="btn btn-light action-button" role="button" href="/logout" style="background: rgb(68,79,79);">Log Out</a></span>
+                    <span class="navbar-text actions"> <a class="login" href="">{{session['username']}}</a><a
+                            class="btn btn-light action-button" role="button" href="/logout"
+                            style="background: rgb(68,79,79);">Log Out</a></span>
                     {% else %}
-                    <span class="navbar-text actions"> <a class="login" href="/loginpage">Log In</a><a class="btn btn-light action-button" role="button" href="/registerpage" style="background: rgb(68,79,79);">Sign Up</a></span>
+                    <span class="navbar-text actions"> <a class="login" href="/loginpage">Log In</a><a
+                            class="btn btn-light action-button" role="button" href="/registerpage"
+                            style="background: rgb(68,79,79);">Sign Up</a></span>
                     {% endif %}
                 </div>
             </div>
         </nav>
     </section>
-    
+
     <div id="empresa" style="padding:20px;margin:1px;">
         <hr>
         <div class="container">
@@ -68,7 +75,15 @@
                                 <h2 class="text-center">{{data.title}}&nbsp;</h2>
                                 <p class="text-center">Author: &nbsp;{{data.author}}&nbsp;</p>
                             </div>
-                            <form class="form-inline" method="post"><a class="btn btn-primary like-counter" role="button" href="#"><i class="fa fa-thumbs-up"></i>&nbsp;|&nbsp;<span id="clicks" class="click-text"></span></a></form>
+                            {% if session['id'] != data.student_id %}
+                            <form class="form-inline" method="post"><a class="btn btn-primary" role="button" href="#"><i
+                                        class="fa fa-thumbs-up"></i>&nbsp;|&nbsp;<span
+                                        class="click-text">{{data.likes}}</span></a></form>
+                            {% else %}
+                            <form class="form-inline" method="post"><a><i
+                                        class="fa fa-thumbs-up"></i>&nbsp;&nbsp;&nbsp;<span
+                                        class="click-text">{{data.likes}}</span></a></form>
+                            {% endif %}
                         </div>
                     </section>
                     <section class="newsletter-subscribe">
@@ -83,25 +98,28 @@
             </div>
         </div>
     </div>
-    {% endfor %}
+    
     <section>
         <div class="card">
             <div class="card-header">
                 <h3>Community Chat</h3>
             </div>
-            <div class="card-body" style="height:233px;">
+            <div class="card-body" style="height:auto;">
                 <ul class="list-group">
                     <li class="list-group-item" style="margin-bottom:6px;">
                         <div class="media">
                             <div></div>
                             <div class="media-body">
                                 <div class="media" style="overflow:visible;">
-                                    <div><img class="mr-3" style="width: 25px; height:25px;" src="assets/img/user-photo4.jpg"></div>
+                                    <div><img class="mr-3" style="width: 25px; height:25px;"
+                                            src="assets/img/user-photo4.jpg"></div>
                                     <div class="media-body" style="overflow:visible;">
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <p><a href="#">Ankita Das:</a> I really liked your blog. Good Work:) <br>
-<small class="text-muted">November 26, 2021 10:35am </small></p>
+                                                <p><a href="#">Ankita Das:</a> I really liked your blog. Good Work:)
+                                                    <br>
+                                                    <small class="text-muted">November 26, 2021 10:35am </small>
+                                                </p>
                                             </div>
                                         </div>
                                     </div>
@@ -109,29 +127,32 @@
                             </div>
                         </div>
                     </li>
+                    {% if session['id'] != data.student_id %}
                     <li class="list-group-item" style="margin-bottom:6px;">
                         <div class="media">
                             <div></div>
                             <div class="media-body">
                                 <div class="media" style="overflow:visible;">
-                                    <div><img class="mr-3" style="width: 25px; height:25px;" src="assets/img/user-photo4.jpg"></div>
                                     <div class="media-body" style="overflow:visible;">
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <p><a href="#">Edwin Perera:</a> Nice blog!! <br>
-<small class="text-muted">November 15, 2021 12:35pm </small></p>
+                                                <form>
+                                                    <input type="text" class="form-control" style="margin-bottom: 10px;" placeholder="Comment">
+                                                    <input type="submit" class="btn btn-primary" style="margin-bottom: 10px; margin-left:0px;"" value="Post Comment">
+                                                </form>
                                             </div>
-                                            
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </li>
-               </ul><button class="btn btn-light" style="margin-left:601px;margin-top:-9px;" type="button">Add Comment</button> 
+                    {% endif %}
+                </ul>
             </div>
         </div>
     </section>
+    {% endfor %}
     <br>
     <br>
     <section>
@@ -156,14 +177,19 @@
                     </div>
                     <div class="col-md-6 item text">
                         <h3>Company Name</h3>
-                        <p>Add a class of&nbsp;fa-fw&nbsp;on the HTML element referencing your icon to set one or more icons to the same fixed width. This is great to use when varying icon widths&nbsp;<br></p>
+                        <p>Add a class of&nbsp;fa-fw&nbsp;on the HTML element referencing your icon to set one or more
+                            icons to the same fixed width. This is great to use when varying icon widths&nbsp;<br></p>
                     </div>
-                    <div class="col item social"><a href="#"><i class="icon ion-social-facebook"></i></a><a href="#"><i class="icon ion-social-twitter"></i></a><a href="#"><i class="icon ion-social-wordpress-outline"></i></a><a href="#"><i class="icon ion-social-instagram"></i></a></div>
+                    <div class="col item social"><a href="#"><i class="icon ion-social-facebook"></i></a><a href="#"><i
+                                class="icon ion-social-twitter"></i></a><a href="#"><i
+                                class="icon ion-social-wordpress-outline"></i></a><a href="#"><i
+                                class="icon ion-social-instagram"></i></a></div>
                 </div>
                 <p class="copyright">KJC_College Blog © 2021</p>
             </div>
         </footer>
     </section>
+
     <script src="static/viewblogassets/js/jquery.min.js"></script>
     <script src="static/viewblogassets/bootstrap/js/bootstrap.min.js"></script>
     <script src="static/viewblogassets/js/bs-init.js"></script>

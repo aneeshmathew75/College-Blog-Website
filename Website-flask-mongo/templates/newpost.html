@@ -34,13 +34,14 @@
                         <!--<li class="nav-item"><a class="nav-link" href="#">Trending</a></li>-->
                         {% if session['email'] %}
                         <li class="nav-item"><a class="nav-link active" href="/newblog">Add Blog</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{url_for('userblog')}}">My Blogs</a></li>
                         {% endif %}
                         <!--<li class="nav-item dropdown"><a class="dropdown-toggle nav-link" aria-expanded="false" data-toggle="dropdown" href="#">Categories&nbsp;</a>
                             <div class="dropdown-menu"><a class="dropdown-item" href="#">Tech</a><a class="dropdown-item" href="#">Economy</a><a class="dropdown-item" href="#">Lifestyle</a></div>
                         </li>-->
                     </ul>
                     {% if session['email'] %}
-                    <span class="navbar-text actions"> <a class="login" href="#">{{session['username']}}</a><a class="btn btn-light action-button" role="button" href="/logout" style="background: rgb(68,79,79);">Log Out</a></span>
+                    <span class="navbar-text actions"> <a class="login" href="">{{session['username']}}</a><a class="btn btn-light action-button" role="button" href="/logout" style="background: rgb(68,79,79);">Log Out</a></span>
                     {% else %}
                     <span class="navbar-text actions"> <a class="login" href="/loginpage">Log In</a><a class="btn btn-light action-button" role="button" href="/registerpage" style="background: rgb(68,79,79);">Sign Up</a></span>
                     {% endif %}

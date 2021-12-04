@@ -68,7 +68,7 @@ def viewblog():
 
 @app.route("/search", methods=['GET', 'POST'])
 def search():
-    search = db.blogs.find({"$or":[ {"author": {"$regex": request.form['search']}}, {"title": {"$regex": request.form['search']}}, {"category":request.form['search']}]})
+    search = db.blogs.find({"$or":[ {"author": {"$regex": request.form['search']}}, {"title": {"$regex": request.form['search']}}, {"category":{"$regex": request.form['search']}}]})
     return render_template('search.html', search = search)
     
 
@@ -137,11 +137,21 @@ def newpost():
 def updateblog():
     if request.method == 'POST':
         blog = db.blogs
-        blog.insert_one({'student_id': session['id'], 'author': session['username'], 'title' : request.form['title'], 'category' : request.form['category'], 'smalldesc' : request.form['smalldesc'], 'reflink' : request.form['reflink'],'content' : request.form['content'], 'likes': 0})
-        return redirect(url_for("homepage"))
-            
-    return redirect(url_for("newblog"))
+        s = request.form['id']
+        blog.update_one({'_id': ObjectId(s)},{ '$set' : {'title' : request.form['title'], 'category' : request.form['category'], 'smalldesc' : request.form['smalldesc'], 'reflink' : request.form['reflink'],'content' : request.form['content']}},upsert=False)
+        return redirect(url_for("userblog"))    
+    return redirect(url_for("homepage"))
 ########Update Blog Post#########
+
+########Delete Blog Post#########
+@app.route('/deleteblog')
+def deleteblog():
+    myvar = request.args.get('myvar', '')
+    blog = db.blogs
+    blog.remove({'_id': ObjectId(myvar)})
+    return redirect(url_for("userblog"))
+########Update Blog Post#########
+
 
 if __name__ == '__main__':
     app.run(debug=True)
