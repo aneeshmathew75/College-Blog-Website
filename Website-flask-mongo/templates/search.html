@@ -28,7 +28,7 @@
             <div class="container"><a class="navbar-brand text-monospace d-inline-flex d-xl-flex flex-row flex-grow-1 flex-shrink-1 align-items-start align-content-start align-self-start my-auto justify-content-xl-start flash animated" href="/homepage" style="font-family: 'Abhaya Libre', serif;">College Blog&nbsp;</a><button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navcol-1">
                     <ul class="navbar-nav mr-auto">
-                        <li class="nav-item"><a class="nav-link active" href="/homepage">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/homepage">Home</a></li>
                         {% if session['email'] %}
                         <li class="nav-item"><a class="nav-link" href="/newblog">Add Blog</a></li>
                         <li class="nav-item"><a class="nav-link" href="{{url_for('userblog')}}">My Blogs</a></li>
@@ -74,7 +74,7 @@
                             <div class="row">
                                 {% for data in search %}
                                 <div class="col-auto col-sm-12 col-md-12 col-lg-4 col-xl-4" style="padding-top: 15px;padding-bottom: 15px;padding-right: 15px;padding-left: 15px;">
-                                    <div class="bg-light border rounded shadow card" data-bss-hover-animate="pulse"><img class="card-img-top" src="static/assets/img/law-document.jpeg">
+                                    <div class="bg-light border rounded shadow card" data-bss-hover-animate="pulse"><img class="card-img-top" src={{data.filepath}}>
                                         <div class="card-body">
                                             <h3 class="card-title" style="font-family: Antic, sans-serif;color: rgb(81,87,94);">{{data.title}}</h3>&nbsp;</h3>
                                             <h5 class="card-sub-title" style="font-family: Antic, sans-serif;color: #38ae53;">{{data.author}}</h5>

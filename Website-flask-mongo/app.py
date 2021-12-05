@@ -1,10 +1,15 @@
+import os
 import re
 from flask import Flask, Response, request, session, redirect, url_for, render_template, flash
+from datetime import datetime
 import json
 import pymongo
 from bson.objectid import ObjectId
 app = Flask(__name__)
 app.secret_key = "jerin"
+
+UPLOAD_FOLDER = 'static/images'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 ########Connection##########
 try:
@@ -46,6 +51,7 @@ def loginpage():
 def newblog():
     return render_template('newpost.html')
 
+
 @app.route("/editblog")
 def editblog():
     if not session.get('email'):
@@ -63,10 +69,27 @@ def viewblog():
     else:
         myvar = request.args.get('myvar', '')
         blog = db.blogs.find({'_id' : ObjectId(myvar)})
-        return render_template('viewblog.html', blog=blog)
-        
+        comment = db.comment.find({'blog_id' : myvar})
+        return render_template('viewblog.html', blog=blog, comment=comment)
 
-@app.route("/search", methods=['GET', 'POST'])
+@app.route("/likeblog")
+def likeblog():
+        blog = db.blogs
+        s = request.args.get('myvar', '')
+        blog.update_one({'_id': ObjectId(s)},{'$inc' : {'likes': 1}})
+        return redirect(url_for("viewblog", myvar=s))
+
+@app.route("/comment", methods=['GET', 'POST'])
+def comment():
+    if request.method == 'POST':
+        blog = db.comment
+        date = datetime.now()
+        s = request.args.get('myvar', '')
+        blog.insert_one({'username':session['username'], 'blog_id':s, 'comment': request.form['comment'], 'commentdate': date})
+        return redirect(url_for("viewblog", myvar=s))
+
+
+@app.route("/search", methods=['GET', 'POST'])  
 def search():
     search = db.blogs.find({"$or":[ {"author": {"$regex": request.form['search']}}, {"title": {"$regex": request.form['search']}}, {"category":{"$regex": request.form['search']}}]})
     return render_template('search.html', search = search)
@@ -121,12 +144,16 @@ def login():
             return redirect(url_for("loginpage"))
 ########Login#########
 
+
 ########New Blog Post#########
 @app.route('/newpost', methods=['GET', 'POST'])
 def newpost():
     if request.method == 'POST':
+        profile_image = request.files['profile_image']
+        id_file = profile_image.filename
+        profile_image.save(os.path.join(app.config['UPLOAD_FOLDER'], id_file))
         blog = db.blogs
-        blog.insert_one({'student_id': session['id'], 'author': session['username'], 'title' : request.form['title'], 'category' : request.form['category'], 'smalldesc' : request.form['smalldesc'], 'reflink' : request.form['reflink'],'content' : request.form['content'], 'likes': 0})
+        blog.insert_one({'student_id': session['id'], 'author': session['username'], 'title' : request.form['title'], 'category' : request.form['category'], 'smalldesc' : request.form['smalldesc'], 'reflink' : request.form['reflink'],'content' : request.form['content'], 'likes': 0, 'filepath':'static/images/'+id_file})
         return redirect(url_for("homepage"))
             
     return redirect(url_for("newblog"))

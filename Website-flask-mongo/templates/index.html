@@ -39,7 +39,7 @@
                         </li>-->
                     </ul>
                     {% if session['email'] %}
-                    <span class="navbar-text actions"> <a class="login" href="">{{session['username']}}</a><a class="btn btn-light action-button" role="button" href="/logout" style="background: rgb(68,79,79);">Log Out</a></span>
+                    <span class="navbar-text actions"> <a class="login">{{session['username']}}</a><a class="btn btn-light action-button" role="button" href="/logout" style="background: rgb(68,79,79);">Log Out</a></span>
                     {% else %}
                     <span class="navbar-text actions"> <a class="login" href="/loginpage">Log In</a><a class="btn btn-light action-button" role="button" href="/registerpage" style="background: rgb(68,79,79);">Sign Up</a></span>
                     {% endif %}
@@ -54,7 +54,7 @@
                     <h1>College Blog is a place to write, read, and connect<br></h1>
                     <p>It's easy and free to post your thinking on any topic and connect with millions of readers.<br></p>
                 </div>
-                <div class="col-sm-6 col-md-5 col-lg-5"><img src="static/assets/img/law-document.jpeg"></div>
+                <div class="col-sm-6 col-md-5 col-lg-5"><img src="static/assets/img/blog.jpg"></div>
             </div>
         </div>
     </div>
@@ -71,13 +71,13 @@
         </div>
         <div class="container">
             <div class="row">
-                <div class="col">
+                <div class="col">   
                     <section>
                         <div class="container">
                             <div class="row">
                                 {% for data in blog %}
                                 <div class="col-auto col-sm-12 col-md-12 col-lg-4 col-xl-4" style="padding-top: 15px;padding-bottom: 15px;padding-right: 15px;padding-left: 15px;">
-                                    <div class="bg-light border rounded shadow card" data-bss-hover-animate="pulse"><img class="card-img-top" src="static/assets/img/law-document.jpeg">
+                                    <div class="bg-light border rounded shadow card" data-bss-hover-animate="pulse"><img class="card-img-top" src={{data.filepath}}>
                                         <div class="card-body">
                                             <h3 class="card-title" style="font-family: Antic, sans-serif;color: rgb(81,87,94);">{{data.title}}</h3>&nbsp;</h3>
                                             <h5 class="card-sub-title" style="font-family: Antic, sans-serif;color: #38ae53;">{{data.author}}</h5>
@@ -149,5 +149,4 @@
     <script src="static/assets/js/bs-init.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
 </body>
-
 </html>

@@ -76,9 +76,10 @@
                                 <p class="text-center">Author: &nbsp;{{data.author}}&nbsp;</p>
                             </div>
                             {% if session['id'] != data.student_id %}
-                            <form class="form-inline" method="post"><a class="btn btn-primary" role="button" href="#"><i
-                                        class="fa fa-thumbs-up"></i>&nbsp;|&nbsp;<span
+                            <form class="form-inline" method="post"><a class="btn btn-primary" role="button" href="{{url_for('likeblog', myvar=data._id)}}"><i
+                                        class="fa fa-thumbs-up" style="color: aqua;"></i>&nbsp;|&nbsp;<span
                                         class="click-text">{{data.likes}}</span></a></form>
+                            
                             {% else %}
                             <form class="form-inline" method="post"><a><i
                                         class="fa fa-thumbs-up"></i>&nbsp;&nbsp;&nbsp;<span
@@ -102,10 +103,11 @@
     <section>
         <div class="card">
             <div class="card-header">
-                <h3>Community Chat</h3>
+                <h3>Community Comments</h3>
             </div>
             <div class="card-body" style="height:auto;">
                 <ul class="list-group">
+                    {% for com in comment%}
                     <li class="list-group-item" style="margin-bottom:6px;">
                         <div class="media">
                             <div></div>
@@ -116,9 +118,9 @@
                                     <div class="media-body" style="overflow:visible;">
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <p><a href="#">Ankita Das:</a> I really liked your blog. Good Work:)
+                                                <p><a href="#"><b>{{com.username}}</b>:&nbsp;&nbsp;</a> {{com.comment}}
                                                     <br>
-                                                    <small class="text-muted">November 26, 2021 10:35am </small>
+                                                    <small class="text-muted">{{com.commentdate}}</small>
                                                 </p>
                                             </div>
                                         </div>
@@ -127,6 +129,7 @@
                             </div>
                         </div>
                     </li>
+                    {% endfor %}
                     {% if session['id'] != data.student_id %}
                     <li class="list-group-item" style="margin-bottom:6px;">
                         <div class="media">
@@ -136,8 +139,8 @@
                                     <div class="media-body" style="overflow:visible;">
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <form>
-                                                    <input type="text" class="form-control" style="margin-bottom: 10px;" placeholder="Comment">
+                                                <form action="{{url_for('comment', myvar=data._id)}}" method="post">
+                                                    <input type="text" class="form-control" name="comment" style="margin-bottom: 10px;" placeholder="Comment">
                                                     <input type="submit" class="btn btn-primary" style="margin-bottom: 10px; margin-left:0px;"" value="Post Comment">
                                                 </form>
                                             </div>
